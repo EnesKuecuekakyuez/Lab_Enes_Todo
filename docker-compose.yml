@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  lab_enes_todo:
+    image: labenestodo
+    build:
+      context: .
+      dockerfile: Lab_Enes_Todo/Dockerfile
+    container_name: Lab_Enes_Todo
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - lab_network
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'lab'
+      MYSQL_ROOT_PASSWORD: 'test'
+    networks:
+      - lab_network
+    ports:
+      - "3307:3306"
+
+networks:
+  lab_network:
+    driver: bridge
